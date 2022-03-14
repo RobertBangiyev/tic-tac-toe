@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+}
+
+.row>div {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+}
+
+.hidden {
+    display: none;
+}
+
+/* .player {
+    background-image: url('./img/X.png');
+}
+
+.computer {
+    background-image: url("./img/O.png");
+} */
+
+img {
+    width: 100px;
+    height: 100px;
+}
