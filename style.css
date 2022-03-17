@@ -69,6 +69,18 @@ button {
     background-color: rgb(71, 43, 228);
 }
 
+.player-one img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.player-two img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .footer {
     display: flex;
     flex-direction: column;
