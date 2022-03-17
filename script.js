@@ -74,22 +74,37 @@ const GameBoard = (() => {
             let roundResult = currTurn.updateScore(rowPos, colPos, diagPos);
             if(roundResult === 'Winner') {
                 endGame();
+            } else if(filledUp()) {
+                endGame(true);
             } else {
                 toggleTurn();
             }
         }
+    }
+    const filledUp = () => {
+        for(let i of gameboard) {
+            if(i === 0) {
+                return false;
+            }
+        }
+        return true;
     }
     const addImage = (element) => {
         const img = document.createElement('img');
         img.src = `./img/${currTurn.symbol}.png`;
         element.appendChild(img);
     }
-    const endGame = () => {
+    const endGame = (tied = false) => {
+        console.log("Game ending");
+        if(tied) {
+            winner.textContent = "It's a Tie!";
+        } else {
+            winner.textContent = currTurn.name;
+        }
         gameboard.splice(0, gameboard.length);
-        for(let i = 0; i < 10; i++) {
+        for(let i = 0; i < 9; i++) {
             gameboard.push(0);
         }
-        winner.textContent = currTurn.name;
         winScreen.classList.remove('hidden');
         gameContainer.classList.add('blur');
         playerOne.resetScore();
