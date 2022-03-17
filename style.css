@@ -21,11 +21,9 @@ body {
 }
 
 .winscreen {
-    /* width: 200px; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* top: 200px; */
 }
 
 .results {
