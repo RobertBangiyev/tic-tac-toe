@@ -1,49 +1,77 @@
 const Player = (name, symbol) => {
-    let score = 0;
-    const updateScore = () => {
-        score++;
-    };
-    const resetScore = () => {
-        score = 0;
+    let rowScore = [0, 0, 0];
+    let colScore = [0, 0, 0];
+    let diagScore = [0, 0];
+    
+    const updateScore = (rowPos, colPos, diagPos) => {
+        rowScore[rowPos]++;
+        colScore[colPos]++;
+        if(diagPos === 'Both') {
+            diagScore[0]++;
+            diagScore[1]++;
+        } else if(diagPos != 'None') {
+            diagScore[diagPos]++;
+        }
+        if(rowScore[rowPos] === 3 || colScore[colPos] === 3 || diagScore[diagPos] === 3) {
+            return "Winner";
+        } else {
+            return "No Winner Yet";
+        }
     }
-    const getScore = () => score;
-    return {name, symbol, updateScore, resetScore, getScore};
+    const resetScore = () => {
+        for(let i = 0; i < 3; i++) {
+            rowScore[i] = 0;
+            colScore[i] = 0;
+        }
+        diagScore[0] = 0;
+        diagScore[1] = 0;
+    }
+    return {name, symbol, updateScore, resetScore};
 }
 
-const gameBoard = (() => {
+const GameBoard = (() => {
     let gameboard = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let gameStart = false;
     const beginBtn = document.querySelector('button');
     const squares = document.querySelectorAll('.row>div');
-    const computerPlayer = Player('Computer', 'O');
-    const userPlayer = Player('Player', 'X');
-    let currTurn = userPlayer;
+    const playerOne = Player('Player One', 'O');
+    const playerTwo = Player('Player Two', 'X');
+    squares.forEach((element, index) => {
+        element.addEventListener('click', () => {
+            if(gameStart) {
+                handleTurn(element, index);
+            }
+        })
+    })
+    let currTurn = playerTwo;
     const toggleTurn = () => {
-        if(currTurn == userPlayer) {
-            currTurn = computerPlayer;
+        if(currTurn == playerTwo) {
+            currTurn = playerOne;
         } else {
-            currTurn = userPlayer;
+            currTurn = playerTwo;
         }
     }
     const startGame = () => {
-        console.log(squares);
-        handleGame();
-        if(computerPlayer.getScore() == 5 || userPlayer.getScore() == 5) {
-            endGame();
-        }
-    }
-    const handleGame = () => {
-        squares.forEach((element, index) => {
-            element.addEventListener('click', () => {
-                handleTurn(element, index);
-            })
+        squares.forEach((element) => {
+            if(element.hasChildNodes()) {
+                element.removeChild(element.lastChild);
+            }
         })
+        gameStart = true;
     }
     const handleTurn = (element, index) => {
-        console.log(index);
         if(gameboard[index] == 0) {
             gameboard[index] = currTurn.symbol;
             addImage(element);
-            toggleTurn();
+            let rowPos = Math.floor(index/3);
+            let colPos = index % 3;
+            let diagPos = index === 4 ? "Both" : index % 4 === 0 ? 0 : index % 2 === 0 ? 1 : "None";
+            let roundResult = currTurn.updateScore(rowPos, colPos, diagPos);
+            if(roundResult === 'Winner') {
+                endGame();
+            } else {
+                toggleTurn();
+            }
         }
     }
     const addImage = (element) => {
@@ -53,7 +81,14 @@ const gameBoard = (() => {
     }
     const endGame = () => {
         gameboard.splice(0, gameboard.length);
-
+        for(let i = 0; i < 10; i++) {
+            gameboard.push(0);
+        }
+        console.log(currTurn.name + " Wins!");
+        playerOne.resetScore();
+        playerTwo.resetScore();
+        currTurn = playerTwo;
+        gameStart = false;
         beginBtn.classList.remove('hidden');
     }
     return {startGame};
@@ -63,6 +98,6 @@ const gameBoard = (() => {
     const beginBtn = document.querySelector('button');
     beginBtn.addEventListener('click', () => {
         beginBtn.classList.add('hidden');
-        gameBoard.startGame();
+        GameBoard.startGame();
     })
 })();
