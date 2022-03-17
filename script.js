@@ -90,7 +90,7 @@ const GameBoard = (() => {
         }
         winner.textContent = currTurn.name;
         winScreen.classList.remove('hidden');
-        // gameContainer.classList.add('blur');
+        gameContainer.classList.add('blur');
         // console.log(currTurn.name + " Wins!");
         playerOne.resetScore();
         playerTwo.resetScore();

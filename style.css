@@ -21,15 +21,20 @@ body {
 }
 
 .winscreen {
-    width: 200px;
-    background-color: #fff;
+    /* width: 200px; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* top: 200px; */
 }
 
 .results {
     position: absolute;
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 10%;
+    top: 150px;
+    z-index: 1;
 }
 
 .hidden {
@@ -42,7 +47,7 @@ img {
 }
 
 .blur {
-    filter: blur(5px);
+    filter: blur(3px);
 }
 
 h1 {
