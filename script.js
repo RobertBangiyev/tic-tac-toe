@@ -33,7 +33,10 @@ const GameBoard = (() => {
     let gameboard = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     let gameStart = false;
     const beginBtn = document.querySelector('button');
+    const gameContainer = document.querySelector('.container');
     const squares = document.querySelectorAll('.row>div');
+    const winScreen = document.querySelector('.winscreen');
+    const winner = document.querySelector('.winner');
     const playerOne = Player('Player One', 'O');
     const playerTwo = Player('Player Two', 'X');
     squares.forEach((element, index) => {
@@ -52,6 +55,7 @@ const GameBoard = (() => {
         }
     }
     const startGame = () => {
+        winScreen.classList.add('hidden');
         squares.forEach((element) => {
             if(element.hasChildNodes()) {
                 element.removeChild(element.lastChild);
@@ -84,7 +88,10 @@ const GameBoard = (() => {
         for(let i = 0; i < 10; i++) {
             gameboard.push(0);
         }
-        console.log(currTurn.name + " Wins!");
+        winner.textContent = currTurn.name;
+        winScreen.classList.remove('hidden');
+        // gameContainer.classList.add('blur');
+        // console.log(currTurn.name + " Wins!");
         playerOne.resetScore();
         playerTwo.resetScore();
         currTurn = playerTwo;

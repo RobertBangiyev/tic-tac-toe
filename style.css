@@ -20,19 +20,31 @@ body {
     border: 1px solid black;
 }
 
+.winscreen {
+    width: 200px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.results {
+    position: absolute;
+}
+
 .hidden {
     display: none;
 }
 
-/* .player {
-    background-image: url('./img/X.png');
-}
-
-.computer {
-    background-image: url("./img/O.png");
-} */
-
 img {
     width: 100px;
     height: 100px;
+}
+
+.blur {
+    filter: blur(5px);
+}
+
+h1 {
+    text-align: center;
 }
