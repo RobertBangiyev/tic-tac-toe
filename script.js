@@ -37,8 +37,8 @@ const GameBoard = (() => {
     const squares = document.querySelectorAll('.row>div');
     const winScreen = document.querySelector('.winscreen');
     const winner = document.querySelector('.winner');
-    const playerOne = Player('Player One', 'O');
-    const playerTwo = Player('Player Two', 'X');
+    const playerOne = Player('Player One', 'X');
+    const playerTwo = Player('Player Two', 'O');
     squares.forEach((element, index) => {
         element.addEventListener('click', () => {
             if(gameStart) {
@@ -46,7 +46,7 @@ const GameBoard = (() => {
             }
         })
     })
-    let currTurn = playerTwo;
+    let currTurn = playerOne;
     const toggleTurn = () => {
         if(currTurn == playerTwo) {
             currTurn = playerOne;
@@ -56,6 +56,7 @@ const GameBoard = (() => {
     }
     const startGame = () => {
         winScreen.classList.add('hidden');
+        gameContainer.classList.remove('blur');
         squares.forEach((element) => {
             if(element.hasChildNodes()) {
                 element.removeChild(element.lastChild);
@@ -93,7 +94,7 @@ const GameBoard = (() => {
         gameContainer.classList.add('blur');
         playerOne.resetScore();
         playerTwo.resetScore();
-        currTurn = playerTwo;
+        currTurn = playerOne;
         gameStart = false;
         beginBtn.classList.remove('hidden');
     }
